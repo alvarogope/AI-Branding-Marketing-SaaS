@@ -1,81 +1,91 @@
-# AI-Powered Branding Tool
-
-> Generates branding keywords and copy snippets from a simple text input.
-
-**This is an ongoing project. Features and structure are actively being developed.**
-
----
-
-## What is this?
-
-An AI-powered branding tool built on top of the Anthropic API. You provide a short input describing your brand, product, or idea, and it returns relevant branding keywords and a copy snippet to help kickstart your creative process.
-
-Currently running as a Python CLI tool with a FastAPI REST layer, it is being expanded into a full-stack SaaS application with cloud infrastructure and a modern frontend.
-
----
-
-## Current Features
-
-- Input validation (max 20 characters)
-- AI-generated branding keywords via Anthropic API
-- AI-generated branding copy snippet via Anthropic API
-- `.env` support for secure API key management
-- REST API with three endpoints via FastAPI
+# AI Branding & Marketing SaaS
+ 
+![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat&logo=fastapi&logoColor=white)
+![Next.js](https://img.shields.io/badge/Next.js-000000?style=flat&logo=nextdotjs&logoColor=white)
+![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB)
+![Claude](https://img.shields.io/badge/Claude-Anthropic-D97757?style=flat)
+![AWS Lambda](https://img.shields.io/badge/AWS%20Lambda-FF9900?style=flat&logo=awslambda&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat&logo=vercel&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-06B6D4?style=flat&logo=tailwindcss&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)
+![Status](https://img.shields.io/badge/Status-In%20Development-orange?style=flat)
+ 
+A full-stack AI-powered SaaS application that acts as an automated branding and marketing assistant. Users provide a brief brand or product description and receive AI-generated marketing copy and SEO keywords in real time, powered by Anthropic's Claude. The backend runs serverlessly on AWS Lambda, and the frontend is deployed on Vercel.
 
 ---
 
-## Tech Stack (Current)
-
-- **Python** — core logic and CLI
-- **Anthropic API** — AI-powered text generation
-- **FastAPI** — REST API layer
-- **python-dotenv** — environment variable management
-- **argparse** — CLI argument parsing
-
----
-
-## Getting Started
-
-### Prerequisites
-
-- Python 3.8+
-- An [Anthropic API key](https://console.anthropic.com)
-
-### API Endpoints
-
+## 🌐 API Endpoints
+ 
 | Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/generate_snippet` | Generate a branding copy snippet |
-| GET | `/generate_keywords` | Generate branding keywords |
-| GET | `/generate_snippet_and_keywords` | Generate both at once |
-
-All endpoints accept a `user_input` query parameter:
+|---|---|---|
+| GET | `/generate_snippet` | Returns an AI-generated marketing snippet |
+| GET | `/generate_keywords` | Returns AI-generated SEO keywords |
+| GET | `/generate_snippet_and_keywords` | Returns both snippet and keywords in one call |
+ 
+All endpoints accept a `user_input` query parameter (max 20 characters).
+ 
+**Example request:**
 ```
-http://127.0.0.1:8000/generate_snippet?user_input=Nike shoes
+GET /generate_snippet_and_keywords?user_input=pizza
+```
+ 
+**Example response:**
+```json
+{
+  "snippet": "Every slice tells a story. Fresh ingredients, bold flavours, unforgettable moments.",
+  "keywords": ["artisan", "fresh", "handcrafted", "authentic", "flavour"]
+}
 ```
 
 ---
 
-## Project Structure
-
+## 🏗️ Architecture
+ 
 ```
-AI-powered SaaS App/
+┌─────────────────────┐         ┌──────────────────────────┐
+│   Next.js (React)   │ ──────▶ │   FastAPI on AWS Lambda  │
+│   Tailwind CSS      │         │   Serverless function    │
+│   Vercel            │         │   Mangum ASGI adapter    │
+└─────────────────────┘         └──────────┬───────────────┘
+                                            │
+                                            ▼
+                                      Anthropic API
+                                  (Claude claude-opus-4-6)
+                               marketing copy + SEO keywords
+```
+
+---
+
+## 🗂️ Project Structure
+ 
+```
+AI-Branding-Marketing-SaaS/
 ├── app/
-│   ├── __init__.py
-│   ├── main.py
-│   └── main_API.py
-├── .env
-├── .gitignore
+│   ├── main.py        # Core AI logic — generate_branding_snippet, generate_keywords
+│   └── app_API.py     # FastAPI app — API routes and input validation
+├── .env               # Anthropic API key (excluded from version control)
+├── .env.example       # Environment variable template
+├── requirements.txt   # Python dependencies
 └── README.md
 ```
 
 ---
 
-## Roadmap
+## 🔨 In Progress
+ 
+- [ ] Next.js frontend — input form, results display, loading states
+- [ ] Vercel deployment and environment configuration
+- [ ] AWS Lambda deployment via Mangum ASGI adapter
+- [ ] User authentication and daily usage limits
+- [ ] History of previously generated content
 
-- [x] **Python CLI** — core logic and argument parsing
-- [x] **FastAPI** — REST API layer with three endpoints
-- [ ] **AWS Lambda** — deploy backend as a serverless function
-- [ ] **API Gateway** — finish backend with AWS API Gateway integration
-- [ ] **React Frontend** — build a modern, responsive UI
-- [ ] **TailwindCSS** — style the frontend
+---
+
+## 🛠️ Tech Stack
+ 
+| Layer | Technology |
+|---|---|
+| AI | Anthropic Claude (`claude-opus-4-6`) |
+| Backend | FastAPI, Python, Uvicorn |
+| Frontend | Next.js, React, Tailwind CSS *(in progress)* |
+| Deployment | AWS Lambda (backend), Vercel (frontend) |

@@ -1,4 +1,4 @@
-from http.client import HTTPException
+from fastapi import HTTPException
 from fastapi import FastAPI
 from app.main import generate_branding_snippet, generate_keywordsS, MAX_INPUT_LENGTH
 
